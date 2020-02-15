@@ -2,16 +2,21 @@ package com.aeryue.yunled;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -68,6 +73,7 @@ public class NetConfigActivity extends AppCompatActivity implements View.OnClick
                     mDialog.getButton(ProgressDialog.BUTTON_POSITIVE).setVisibility(View.VISIBLE);
                     //mDialog.getButton(ProgressDialog.BUTTON_NEGATIVE).setVisibility(View.VISIBLE);
                     break;
+
             }
         }
     };
@@ -76,7 +82,28 @@ public class NetConfigActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_net_config);
+        getPermissions();
         initNetView();
+    }
+
+    private void getPermissions() {
+        //如果手机版本为6.0及以上，需要动态申请权限
+        if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.M){
+            requestRunPermisson(new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                    ,Manifest.permission.ACCESS_WIFI_STATE});
+        }
+    }
+
+    private void requestRunPermisson(String[] strings){
+        for (String permisson:strings) {
+            //检查当前权限是否已经授权
+            if (ContextCompat.checkSelfPermission(this,permisson)
+                    != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this,strings,108);
+                Toast.makeText(NetConfigActivity.this,"部分功能需要该权限\n使用时手动打开",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override

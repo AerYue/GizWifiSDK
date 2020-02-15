@@ -45,8 +45,6 @@ public class SplashActivity extends AppCompatActivity {
             requestRunPermisson(new String[]{
                     Manifest.permission.READ_EXTERNAL_STORAGE
                     ,Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ,Manifest.permission.ACCESS_FINE_LOCATION
-                    ,Manifest.permission.ACCESS_WIFI_STATE
                     ,Manifest.permission.ACCESS_NETWORK_STATE
                     ,Manifest.permission.READ_PHONE_STATE});
         }else{
@@ -64,7 +62,7 @@ public class SplashActivity extends AppCompatActivity {
             }else{
                 status++;
             }
-            if (status==6){
+            if (status==4){
                 //权限已经全部授权
                 //mHandler.sendEmptyMessageDelayed(107,500);
                 mHandler.sendEmptyMessage(107);
