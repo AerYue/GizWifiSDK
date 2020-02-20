@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String DECODED_BITMAP_KEY = "codedBitmap";
     private static final int REQUEST_CODE_SCAN = 0x0000;
 
-    //异步处理
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler(){
         @Override
